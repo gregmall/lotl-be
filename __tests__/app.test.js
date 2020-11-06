@@ -27,4 +27,50 @@ describe('lotl-be routes', () => {
 
     });
   });
+  
+  it('gets all characters', async() => {
+    const characters = await Promise.all([
+      {   name: 'Holly Marshall',
+        image: 'www.landofthelost.com',
+        species: 'human',
+        actor: 'Kathy Coleman'
+      },
+      {   name: 'Steve Actor',
+        image: 'www.landofthelostyeah.com',
+        species: 'human',
+        actor: 'Bill Person'
+      },
+      {   name: 'Garh Nah',
+        image: 'www.sleestack.com',
+        species: 'sleestack',
+        actor: 'Marv Marvelous'
+      }
+      
+
+    ].map(character => LandOfTheLost.insert(character)));
+
+    return request(app)
+      .get('/api/v1/characters')
+      .then(res => {
+        characters.forEach(character => {
+          expect(res.body).toContainEqual(character);
+        });
+      });
+  
+
+  });
+  it('gets a character by ID', async() => {
+    const character = await LandOfTheLost.insert({
+
+      name: 'Holly Marshall',
+      image: 'www.landofthelost.com',
+      species: 'human',
+      actor: 'Kathy Coleman'
+    });
+    const response = await request(app)
+      .get(`/api/v1/characters/${character.id}`);
+    
+    expect(response.body).toEqual(character);
+    
+  });
 });
