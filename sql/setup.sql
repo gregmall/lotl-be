@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS landofthelost;
+
+CREATE TABLE landofthelost(
+  id BIGINT GENERATED ALWAYS AS IDENTITY,
+  name TEXT NOT NULL,
+  image TEXT NOT NULL,
+  species TEXT NOT NULL,
+  actor TEXT NOT NULL
+
+
+)
