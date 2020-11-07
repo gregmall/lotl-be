@@ -73,4 +73,36 @@ describe('lotl-be routes', () => {
     expect(response.body).toEqual(character);
     
   });
+  it('updates a character by id', async() => {
+    const character = await LandOfTheLost.insert({
+      name: 'Holly Marshall',
+      image: 'www.landofthelost.com',
+      species: 'human',
+      actor: 'Kathy Coleman'
+
+    });
+
+    return request(app)
+      .put(`/api/v1/characters/${character.id}`)
+      .send({
+        name: 'Holly Marshall',
+        image: 'www.land.com',
+        species: 'human',
+        actor: 'Kathy Wilma Coleman'
+
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+
+          id: expect.any(String),
+          name: 'Holly Marshall',
+          image: 'www.land.com',
+          species: 'human',
+          actor: 'Kathy Wilma Coleman'
+
+        });
+      });
+  });
+
+ 
 });
