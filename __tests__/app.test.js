@@ -104,5 +104,20 @@ describe('lotl-be routes', () => {
       });
   });
 
+  it('deletes a character by id', async() => {
+    const character = await LandOfTheLost.insert({
+      name: 'Holly Marshall',
+      image: 'www.landofthelost.com',
+      species: 'human',
+      actor: 'Kathy Coleman'
+
+    });
+    const response = await request(app)
+      .delete(`/api/v1/characters/${character.id}`);
+
+    expect(response.body).toEqual(character);
+
+  });
+
  
 });
